@@ -45,7 +45,7 @@ export default {
     },
     mounted(){
         let nbr = this.$route.params.recette;
-        axios.get("http://tmeyer.mmi.o2switch.site/gameweb/wp-json/wp/v2/type_recette").then(response => { 
+        axios.get("https://tmeyer.mmi.o2switch.site/gameweb/wp-json/wp/v2/type_recette").then(response => { 
             // this.recette = response.data[nbr];
             let ifn = response.data.filter(x => x.post_name == nbr);
             this.recette = ifn[0];

@@ -16,7 +16,7 @@ export default {
     }
   },
   mounted(){
-    axios.get("http://tmeyer.mmi.o2switch.site/gameweb/wp-json/wp/v2/type_recette").then(response => this.recettes = response.data);
+    axios.get("https://tmeyer.mmi.o2switch.site/gameweb/wp-json/wp/v2/type_recette").then(response => this.recettes = response.data);
     console.log(this.recettes);
   }
 }
