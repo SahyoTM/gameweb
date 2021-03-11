@@ -8,10 +8,12 @@
     <input v-model="query" type="search" autocomplete="off" />
 
     <ul v-if="recettes.length">
-      <li v-for="recette of recettes" :key="recette.slug">
-        <NuxtLink :to="{ name: 'blog-slug', params: { slug: article.slug } }">{{ article.title }}</NuxtLink>
+      <li v-for="recette of recettes" :key="recette.post_name">
+        <NuxtLink :to="`recette/${recette.post_name}`">{{ recette.post_title }}</NuxtLink>
       </li>
     </ul>
+
+    <p>{{recettes.length}}</p>
   </div> 
   </div>
 </template>
@@ -38,13 +40,13 @@ export default {
         return
       }
 
-      this.articles = await this.$content('recettes')
-        .only(['title', 'slug'])
-        .sortBy('createdAt', 'asc')
+      this.recettes = await this.$content('recettes')
+        .only(['post_title', 'post_name'])
         .limit(12)
         .search(query)
         .fetch()
     }
+}
 }
 
 </script>
