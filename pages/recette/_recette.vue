@@ -1,6 +1,7 @@
 <template>
     <b-container id="recette">
         <Nuxtlink class="back_link" @click="$router.back()"><b-icon icon="chevron-double-left" variant="dark"></b-icon> Retour en arrière </Nuxtlink>
+        <p>Visites totales sur le site: {{this.$store.state.analytics.pageVisits}}</p>
         <h1 class="text-center font-weight-bold h1 text-uppercase">{{recette.post_title}}</h1>
 
         <div class="text-center">
@@ -25,9 +26,15 @@
             </tbody>
             </table>
         </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <li v-for="(ingredient, i) in ingredients" :key="i">{{ingredients[i].nom_ingredient}} - {{ingredients[i].grammage_ingredient}}</li>
+            </div>
 
-        <div>
-            <li v-for="(ingredient, i) in ingredients" :key="i">{{ingredients[i].nom_ingredient}} - {{ingredients[i].grammage_ingredient}}</li>
+            <div class="col-md-6">
+                <li v-for="(etape, j) in etapes" :key="j">{{etapes[j].numero_etape}} - {{etapes[j].description_etape}}</li>
+            </div>
         </div>
         
         
@@ -41,6 +48,7 @@ export default {
         return{
             recette:[],
             ingredients:[],
+            etapes:[],
         }
     },
     mounted(){
@@ -54,9 +62,13 @@ export default {
             this.difficultee = ifn[0].acf.difficultee[0];
             this.url = ifn[0].acf.image_recette.sizes.medium;
             this.ingredients = ifn[0].acf.liste_ingredients;
+            this.etapes = ifn[0].acf.etapes_recette;
             console.log(this.ingredients);
             });
         
+    },
+    middleware ({ store }) {
+        store.commit('analytics/increment')
     }    
 }   
 </script>

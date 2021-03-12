@@ -45,6 +45,8 @@ export default {
     '@nuxtjs/pwa',
     
     '@nuxt/content',
+
+    '@nuxtjs/color-mode',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -63,5 +65,12 @@ export default {
 
   bootstrapVue: {
     icons: true
+  },
+
+  loading: {
+    color: 'DodgerBlue',
+    height: '10px',
+    continuous: true,
+    duration: 3000
   }
 }

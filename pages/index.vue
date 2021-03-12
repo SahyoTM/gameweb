@@ -1,25 +1,32 @@
 <template>
   <div class="container">
     <div>
-      <ul><li v-for="(recette, index) in recettes" :key="index"><NuxtLink :to="`recette/${recette.post_name}`">{{recette.post_title}}</NuxtLink></li></ul>
-    </div>
+      <input v-model="query" type="search" @change="fonction1" autocomplete="off" />
+
+      <ul v-if="recettes.length">
+        <li v-for="recette of recettes" :key="recette.post_name">
+          <NuxtLink :to="`recette/${recette.post_name}`">{{ recette.post_title }}</NuxtLink>
+        </li>
+      </ul>
+    </div> 
 
     <div>
-    <input v-model="query" type="search" autocomplete="off" />
+      <h1>Color mode: {{ $colorMode.value }}</h1>
+      <select v-model="$colorMode.preference">
+        <option value="system">System</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+        <option value="sepia">Sepia</option>
+      </select>
+    </div>
 
-    <ul v-if="recettes.length">
-      <li v-for="recette of recettes" :key="recette.post_name">
-        <NuxtLink :to="`recette/${recette.post_name}`">{{ recette.post_title }}</NuxtLink>
-      </li>
-    </ul>
-
-    <p>{{recettes.length}}</p>
-  </div> 
+    <!-- <ColorModePicker /> -->
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+
 export default {
   name: 'homepage',
   data(){
@@ -40,11 +47,11 @@ export default {
         return
       }
 
-      this.recettes = await this.$content('recettes')
+      /* this.recettes = await this.$content('recettes')
         .only(['post_title', 'post_name'])
         .limit(12)
         .search(query)
-        .fetch()
+        .fetch() */
     }
 }
 }
@@ -61,5 +68,17 @@ export default {
   transform: scale(0);
 }
 
+.dark-mode p,.dark-mode th,.dark-mode td, .dark-mode svg{
+  color:white !important;
+}
 
+.dark-mode body{
+  background-color: #091A28;
+  color:white;
+}
+
+.sepia-mode body{
+  background-color: pink;
+  color:black;
+}
 </style>
