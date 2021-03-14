@@ -1,7 +1,8 @@
 <template>
   <div class="container">
+    <Nav />
     <div>
-      <input v-model="query" type="search" @change="fonction1" autocomplete="off" />
+      <input v-model="query" type="search"  autocomplete="off" />
 
       <ul v-if="recettes.length">
         <li v-for="recette of recettes" :key="recette.post_name">
@@ -9,7 +10,6 @@
         </li>
       </ul>
     </div> 
-
     <div>
       <h1>Color mode: {{ $colorMode.value }}</h1>
       <select v-model="$colorMode.preference">
@@ -19,8 +19,6 @@
         <option value="sepia">Sepia</option>
       </select>
     </div>
-
-    <!-- <ColorModePicker /> -->
   </div>
 </template>
 
@@ -32,28 +30,12 @@ export default {
   data(){
     return {
       recettes: [],
-      query: '',
     }
   },
   mounted(){
     axios.get("https://tmeyer.mmi.o2switch.site/gameweb/wp-json/wp/v2/type_recette").then(response => this.recettes = response.data);
     console.log(this.recettes);
-  },
-
-  watch: {
-    async query (query) {
-      if (!query) {
-        this.recettes = []
-        return
-      }
-
-      /* this.recettes = await this.$content('recettes')
-        .only(['post_title', 'post_name'])
-        .limit(12)
-        .search(query)
-        .fetch() */
-    }
-}
+  }
 }
 
 </script>

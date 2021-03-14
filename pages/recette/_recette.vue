@@ -1,5 +1,6 @@
 <template>
     <b-container id="recette">
+        <Nav />
         <Nuxtlink class="back_link" @click="$router.back()"><b-icon icon="chevron-double-left" variant="dark"></b-icon> Retour en arrière </Nuxtlink>
         <p>Visites totales sur le site: {{this.$store.state.analytics.pageVisits}}</p>
         <h1 class="text-center font-weight-bold h1 text-uppercase">{{recette.post_title}}</h1>
@@ -27,13 +28,15 @@
             </table>
         </div>
         
-        <div class="row">
+        <div id="et_ing" class="row">
             <div class="col-md-6">
-                <li v-for="(ingredient, i) in ingredients" :key="i">{{ingredients[i].nom_ingredient}} - {{ingredients[i].grammage_ingredient}}</li>
+                <h2 class="text-left text-uppercase font-weight-bold">ingrédients</h2>
+                <li v-for="(ingredient, i) in ingredients" :key="i">{{ingredients[i].nom_ingredient}} <span v-if="ingredients[i].grammage_ingredient != ''">- {{ingredients[i].grammage_ingredient}}</span></li>
             </div>
 
-            <div class="col-md-6">
-                <li v-for="(etape, j) in etapes" :key="j">{{etapes[j].numero_etape}} - {{etapes[j].description_etape}}</li>
+            <div id ="etape_recette" class="col-md-6">
+                <h2 class="text-center text-uppercase font-weight-bold">étapes de réalisations</h2>
+                <li v-for="(etape, j) in etapes" :key="j"><span class="numero">{{etapes[j].numero_etape}}</span> - {{etapes[j].description_etape}}</li>
             </div>
         </div>
         
@@ -97,4 +100,18 @@ img{
     text-decoration: underline;
     cursor:pointer;
 }
+
+div#et_ing{
+    margin-top:2rem;
+}
+
+div#etape_recette li{
+    margin-bottom:1.5rem;
+}
+
+div#etape_recette span.numero{
+    font-weight:700;
+    font-size:1.5rem;
+}
+
 </style>
