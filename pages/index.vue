@@ -1,24 +1,13 @@
 <template>
   <div class="container">
     <Nav />
-    <div>
-      <input v-model="query" type="search"  autocomplete="off" />
-
-      <ul v-if="recettes.length">
-        <li v-for="recette of recettes" :key="recette.post_name">
-          <NuxtLink :to="`recette/${recette.post_name}`">{{ recette.post_title }}</NuxtLink>
-        </li>
-      </ul>
-    </div> 
-    <div>
-      <h1>Color mode: {{ $colorMode.value }}</h1>
-      <select v-model="$colorMode.preference">
-        <option value="system">System</option>
-        <option value="light">Light</option>
-        <option value="dark">Dark</option>
-        <option value="sepia">Sepia</option>
-      </select>
+    <div v-for="recette in filteredRecettes" :key="recette.post_name">
+      <NuxtLink :to="`recette/${recette.post_name}`">
+        {{recette.post_title}}
+      </NuxtLink>
     </div>
+
+    <input type="text"  v-model="search"> 
   </div>
 </template>
 
@@ -30,14 +19,26 @@ export default {
   data(){
     return {
       recettes: [],
+      search:'',
     }
   },
   mounted(){
-    axios.get("https://tmeyer.mmi.o2switch.site/gameweb/wp-json/wp/v2/type_recette").then(response => this.recettes = response.data);
+    axios.get("https://tmeyer.mmi.o2switch.site/gameweb/wp-json/wp/v2/type_recette").then(response => 
+    this.recettes = response.data
+    );
     console.log(this.recettes);
-  }
-}
+  },
 
+  computed: {
+    filteredRecettes() {
+      //this.$nuxt.$on('searchEvent', () => {
+        return this.recettes.filter(recette => {
+          return recette.post_name.indexOf(this.search.toLowerCase()) > -1
+          console.log(search)
+        })
+      }
+    }
+  }
 </script>
 
 <style>
