@@ -1,13 +1,31 @@
 <template>
   <div class="container">
     <Nav />
-    <div v-for="recette in filteredRecettes" :key="recette.post_name">
-      <NuxtLink :to="`recette/${recette.post_name}`">
-        {{recette.post_title}}
-      </NuxtLink>
-    </div>
+    <input type="text"  v-model="search" placeholder="Recherchez la recette que vous souhaitez"> 
+    
+    <div class="row">
+      <div v-for="recette in filteredRecettes" :key="recette.post_name">
+        <NuxtLink :to="`recette/${recette.post_name}`">
+          <div>
+            <b-card
+              :title="`${recette.post_title}`"
+              :img-src="`${recette.acf.image_recette.sizes.medium}`"
+              :img-alt="`photo de ${recette.post_name}`"
+              img-top 
+              tag="article"
+              style="max-width: 20rem;"
+              class="col-md-3"
+            >
+              <!-- <b-card-text>
+                Some quick example text to build on the card title and make up the bulk of the card's content.
+              </b-card-text>
 
-    <input type="text"  v-model="search"> 
+              <b-button href="#" variant="primary">Go somewhere</b-button> -->
+            </b-card>
+          </div>
+        </NuxtLink>
+    </div>
+    </div>
   </div>
 </template>
 
@@ -24,8 +42,7 @@ export default {
   },
   mounted(){
     axios.get("https://tmeyer.mmi.o2switch.site/gameweb/wp-json/wp/v2/type_recette").then(response => 
-    this.recettes = response.data
-    );
+    this.recettes = response.data    );
     console.log(this.recettes);
   },
 

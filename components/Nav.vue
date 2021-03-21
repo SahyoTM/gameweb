@@ -1,13 +1,13 @@
 <template>
   <div>
-    <b-navbar toggleable="md" type="light" >
+    <b-navbar toggleable="xl" type="light" >
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item class="test"><NuxtLink to="/">ACCUEIL</NuxtLink></b-nav-item>
-          <input type="text" @click="$nuxt.$emit(searchEvent, search)" v-model="search"> 
+          <!-- <input type="text" @click="$nuxt.$emit(searchEvent, search)" v-model="search">  -->
           <b-nav-item v-if="$colorMode.preference === 'dark'" @click="$colorMode.preference = 'light'"><b-icon icon="sun"></b-icon></b-nav-item>
            <b-nav-item v-if="$colorMode.preference === 'light'" @click="$colorMode.preference = 'dark'"><b-icon icon="moon"></b-icon></b-nav-item>
         </b-navbar-nav>
